@@ -30,6 +30,12 @@ export default function Navbar() {
             Products
           </button>
           <button 
+            onClick={() => navigate('/inventory')} 
+            className="cursor-pointer hover:text-indigo-600 transition-colors"
+            >
+            Inventory
+            </button>
+          <button 
             onClick={() => navigate('/cart')} 
             className="cursor-pointer hover:text-indigo-600 transition-colors"
           >

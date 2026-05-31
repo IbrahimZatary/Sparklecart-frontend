@@ -3,6 +3,10 @@ import Home from './Pages/Home';
 import Login from './Pages/Login';
 import SignUp from './Pages/signup';
 import ProductTest from "./Api/product"
+import Products from './Pages/Products';
+import Cart from './Pages/Cart'; 
+import Inventory from './Pages/Inventory';
+
 
 function App() {
   const token = localStorage.getItem('token');
@@ -23,6 +27,10 @@ function App() {
           path="/cart" 
           element={token ? <Cart /> : <Navigate to="/signin" />} 
         />
+        <Route 
+        path="/inventory" 
+         element={token ? <Inventory /> : <Navigate to="/signin" />} 
+/>
       </Routes>
     </BrowserRouter>
   );

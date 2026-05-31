@@ -45,14 +45,14 @@ export default function Products() {
     
     if (!userId) {
       alert('Please login first');
-      navigate('/login');
+      navigate('/signin');
       return;
     }
 
     setAddingToCart(productId);
     try {
       await apiClient.post(`/cart/add?userID=${userId}`, { 
-        productId, 
+        productId: productId, 
         quantity: 1 
       });
       alert('Added to cart!');
@@ -115,11 +115,11 @@ export default function Products() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {products.map((product) => (
-                <div key={product.productID} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div key={product.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                   {/* Product Image Placeholder */}
                   <div 
                     className="h-48 bg-gradient-to-br from-gray-100 to-gray-200 cursor-pointer flex items-center justify-center"
-                    onClick={() => navigate(`/product/${product.productID}`)}
+                    onClick={() => navigate(`/product/${product.id}`)}
                   >
                     <span className="text-4xl">🛍️</span>
                   </div>
@@ -127,13 +127,13 @@ export default function Products() {
                   <div className="p-4">
                     <h3 
                       className="text-lg font-bold text-gray-800 mb-1 cursor-pointer hover:text-indigo-600"
-                      onClick={() => navigate(`/product/${product.productID}`)}
+                      onClick={() => navigate(`/product/${product.id}`)}
                     >
                       {product.name}
                     </h3>
                     
                     <p className="text-gray-500 text-sm mb-2">
-                      Stock: {product.quantity || product.stockQuantity || 0}
+                      Stock: {product.quantity || 0}
                     </p>
                     
                     <div className="flex justify-between items-center mt-3">
@@ -142,11 +142,11 @@ export default function Products() {
                       </span>
                       
                       <button 
-                        onClick={() => addToCart(product.productID)}
-                        disabled={addingToCart === product.productID}
+                        onClick={() => addToCart(product.id)}
+                        disabled={addingToCart === product.id}
                         className="bg-black hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors cursor-pointer text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        {addingToCart === product.productID ? 'Adding...' : 'Add to Cart'}
+                        {addingToCart === product.id ? 'Adding...' : 'Add to Cart'}
                       </button>
                     </div>
                   </div>
