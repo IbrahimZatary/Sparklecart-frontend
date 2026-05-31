@@ -18,10 +18,14 @@ export default function Login() {
     try {
       const response = await apiClient.post('/auth/login', { email, password });
       
-      if (response.token) {
-        localStorage.setItem('token', response.token);
+      if (response.accessToken) {
+        localStorage.setItem('token', response.accessToken);
         localStorage.setItem('user', JSON.stringify({ email: response.email }));
-        navigate('/products');
+        localStorage.setItem('userId', response.userId);
+        console.log('Login successful!');
+        navigate('/');  // ← Redirect to Home page
+      } else {
+        setError('Login failed: No token received');
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed. Please try again.');

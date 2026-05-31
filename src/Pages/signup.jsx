@@ -25,7 +25,7 @@ export default function SignUp() {
         password: formData.password
       });
       
-      navigate('/login');
+      navigate('/signin');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed. Please try again.');
     } finally {

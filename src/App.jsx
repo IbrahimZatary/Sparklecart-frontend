@@ -2,9 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './Pages/Home';
 import Login from './Pages/Login';
 import SignUp from './Pages/signup';
-import Products from './Pages/Products';
 import ProductTest from "./Api/product"
-import Cart from './Pages/Cart';
 
 function App() {
   const token = localStorage.getItem('token');
