@@ -14,7 +14,6 @@ export default function Cart() {
 
   const userId = localStorage.getItem('userId');
 
-  // Load cart when component mounts
   useEffect(() => {
     if (!userId) {
       navigate('/signin');
@@ -40,34 +39,17 @@ export default function Cart() {
 
   const updateQuantity = async (itemId, currentQuantity, change) => {
     const newQuantity = currentQuantity + change;
-    if (newQuantity < 1) {
-      await removeItem(itemId);
-      return;
-    }
+    if (newQuantity < 1) return; // Don't allow quantity below 1 (no remove)
     
     setUpdatingId(itemId);
     try {
       await apiClient.put('/cart/quantity', { 
-        cartItemId: itemId,      // Send as cartItemId (backend DTO expects this)
+        cartItemId: itemId,
         quantityRequired: newQuantity 
       });
       await loadCart();
     } catch (err) {
       alert(err.response?.data?.message || 'Failed to update quantity');
-    } finally {
-      setUpdatingId(null);
-    }
-  };
-
-  const removeItem = async (itemId) => {
-    if (!window.confirm('Remove this item from your cart?')) return;
-    
-    setUpdatingId(itemId);
-    try {
-      await apiClient.delete(`/cart/items/${itemId}`);
-      await loadCart();
-    } catch (err) {
-      alert(err.response?.data?.message || 'Failed to remove item');
     } finally {
       setUpdatingId(null);
     }
@@ -90,7 +72,6 @@ export default function Cart() {
     }
   };
 
-  // Loading state
   if (loading) {
     return (
       <>
@@ -106,7 +87,6 @@ export default function Cart() {
     );
   }
 
-  // Error state
   if (error) {
     return (
       <>
@@ -128,7 +108,6 @@ export default function Cart() {
     );
   }
 
-  // Empty cart state
   if (!cart?.items || cart.items.length === 0) {
     return (
       <>
@@ -149,7 +128,6 @@ export default function Cart() {
     );
   }
 
-  // Calculate totals with proper fallbacks
   const subtotal = cart.totalPrice || cart.items.reduce((sum, item) => sum + (item.subtotal || (item.quantity * (item.unitPrice || item.productPrice || 0))), 0);
   const shipping = subtotal > 50 ? 0 : 5.99;
   const tax = subtotal * 0.1;
@@ -163,10 +141,8 @@ export default function Cart() {
           <h1 className="text-3xl font-bold text-gray-800 mb-8">Your Cart</h1>
           
           <div className="flex flex-col lg:flex-row gap-8">
-            {/* Cart Items */}
             <div className="flex-1">
               <div className="bg-white rounded-lg shadow overflow-hidden">
-                {/* Table Header */}
                 <div className="hidden md:grid grid-cols-12 gap-4 bg-gray-100 px-6 py-3 text-sm font-semibold text-gray-600">
                   <div className="col-span-6">Product</div>
                   <div className="col-span-2 text-center">Price</div>
@@ -174,10 +150,8 @@ export default function Cart() {
                   <div className="col-span-2 text-right">Total</div>
                 </div>
                 
-                {/* Cart Items - FIXED: using item.id (not cartItemId) */}
                 <div className="divide-y divide-gray-200">
                   {cart.items.map((item) => {
-                    // CRITICAL FIX: Use item.id (matches your CartItem model's primary key)
                     const itemId = item.id;
                     const unitPrice = item.unitPrice || item.productPrice || 0;
                     const subtotalItem = item.subtotal || (unitPrice * item.quantity);
@@ -185,7 +159,6 @@ export default function Cart() {
                     return (
                       <div key={itemId} className="p-6">
                         <div className="flex flex-col md:flex-row md:items-center gap-4">
-                          {/* Product Info */}
                           <div className="flex-1">
                             <h3 className="font-semibold text-lg text-gray-800">
                               {item.productName}
@@ -193,12 +166,10 @@ export default function Cart() {
                             <p className="text-gray-500 text-sm">In stock</p>
                           </div>
                           
-                          {/* Price */}
                           <div className="md:w-32 text-left md:text-center">
                             <span className="text-gray-600">${unitPrice.toFixed(2)}</span>
                           </div>
                           
-                          {/* Quantity Controls */}
                           <div className="md:w-32">
                             <div className="flex items-center gap-3">
                               <button
@@ -221,18 +192,10 @@ export default function Cart() {
                             </div>
                           </div>
                           
-                          {/* Subtotal & Remove */}
                           <div className="md:w-32 text-right">
                             <div className="font-semibold text-gray-800">
                               ${subtotalItem.toFixed(2)}
                             </div>
-                            <button
-                              onClick={() => removeItem(itemId)}
-                              disabled={updatingId === itemId}
-                              className="text-sm text-red-500 hover:text-red-700 mt-1 disabled:opacity-50"
-                            >
-                              Remove
-                            </button>
                           </div>
                         </div>
                       </div>
@@ -241,16 +204,14 @@ export default function Cart() {
                 </div>
               </div>
               
-              {/* Continue Shopping Link */}
               <button
                 onClick={() => navigate('/products')}
                 className="mt-6 text-indigo-600 hover:text-indigo-800 flex items-center gap-2"
               >
-                ← Continue Shopping
+                 Continue Shopping
               </button>
             </div>
 
-            {/* Order Summary */}
             <div className="lg:w-96">
               <div className="bg-white rounded-lg shadow p-6 sticky top-4">
                 <h2 className="text-xl font-bold text-gray-800 mb-4">Order Summary</h2>

@@ -41,7 +41,12 @@ export default function Navbar() {
           >
             Cart
           </button>
-          
+          <button 
+            onClick={() => navigate('/orders')} 
+            className="cursor-pointer hover:text-indigo-600 transition-colors"
+            >
+            Orders
+            </button>
           {token ? (
             <button 
               onClick={handleLogout} 

@@ -7,6 +7,8 @@ import Products from './Pages/Products';
 import Cart from './Pages/Cart'; 
 import Inventory from './Pages/Inventory';
 
+import Orders from './Pages/Orders';
+
 
 function App() {
   const token = localStorage.getItem('token');
@@ -30,7 +32,11 @@ function App() {
         <Route 
         path="/inventory" 
          element={token ? <Inventory /> : <Navigate to="/signin" />} 
-/>
+        />
+        <Route 
+          path="/orders" 
+          element={token ? <Orders /> : <Navigate to="/signin" />} 
+        />
       </Routes>
     </BrowserRouter>
   );
