@@ -21,7 +21,7 @@ export default function Inventory() {
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  // Check authentication
+
   const token = localStorage.getItem('token');
   useEffect(() => {
     if (!token) {
@@ -29,7 +29,6 @@ export default function Inventory() {
     }
   }, [token, navigate]);
 
-  // Load products and categories
   useEffect(() => {
     let isMounted = true;
     
@@ -65,7 +64,6 @@ export default function Inventory() {
     };
   }, []);
 
-  // Open create modal
   const openCreateModal = () => {
     setEditingProduct(null);
     setFormData({
@@ -78,7 +76,6 @@ export default function Inventory() {
     setShowModal(true);
   };
 
-  // Open edit modal
   const openEditModal = (product) => {
     setEditingProduct(product);
     setFormData({
@@ -91,13 +88,11 @@ export default function Inventory() {
     setShowModal(true);
   };
 
-  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Create or update product
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
@@ -114,18 +109,15 @@ export default function Inventory() {
       console.log('Sending product data:', productData);
 
       if (editingProduct) {
-        // UPDATE product - using 'id' from your API
         await apiClient.put(`/product/${editingProduct.id}`, productData);
         alert('Product updated successfully!');
       } else {
-        // CREATE product
         await apiClient.post('/product', productData);
         alert('Product created successfully!');
       }
 
       setShowModal(false);
       
-      // Refresh products list
       const updatedProducts = await apiClient.get('/product');
       setProducts(updatedProducts);
     } catch (err) {
@@ -146,7 +138,6 @@ export default function Inventory() {
     }
   };
 
-  // Delete product
   const handleDelete = async (product) => {
     if (!window.confirm(`Are you sure you want to delete "${product.name}"? This action cannot be undone.`)) {
       return;
@@ -164,7 +155,6 @@ export default function Inventory() {
     }
   };
 
-  // Get category name by ID
   const getCategoryName = (categoryId) => {
     const category = categories.find(c => c.categoryID === categoryId || c.id === categoryId);
     return category?.name || 'Unknown';
@@ -175,6 +165,8 @@ export default function Inventory() {
       <>
         <Navbar />
         <div className="min-h-screen flex items-center justify-center">
+          
+          
           <div className="flex flex-col items-center gap-4">
             <div className="w-12 h-12 border-4 border-gray-300 border-t-indigo-600 rounded-full animate-spin"></div>
             <div className="text-xl text-gray-600">Loading inventory...</div>
@@ -211,7 +203,6 @@ export default function Inventory() {
       <Navbar />
       <div className="bg-gray-50 min-h-screen py-8">
         <div className="container mx-auto px-4">
-          {/* Header */}
           <div className="flex justify-between items-center mb-8">
             <div>
               <h1 className="text-3xl font-bold text-gray-800">Inventory Management</h1>
@@ -225,7 +216,6 @@ export default function Inventory() {
             </button>
           </div>
 
-          {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="bg-white rounded-lg shadow p-6">
               <div className="text-3xl font-bold text-indigo-600">{products.length}</div>
@@ -243,7 +233,6 @@ export default function Inventory() {
             </div>
           </div>
 
-          {/* Products Table */}
           <div className="bg-white rounded-lg shadow overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -251,9 +240,12 @@ export default function Inventory() {
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Name</th>
+                    
+                    
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                  
+                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
@@ -315,7 +307,6 @@ export default function Inventory() {
         </div>
       </div>
 
-      {/* Modal for Create/Edit */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-screen overflow-y-auto">

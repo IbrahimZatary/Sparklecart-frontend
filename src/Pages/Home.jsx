@@ -39,7 +39,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* About Us Section */}
         <div className="container mx-auto px-4 py-24 relative">
           <div className="absolute -top-10 left-10 w-24 h-24 bg-pink-300/20 rounded-full blur-2xl"></div>
           <div className="text-center mb-16">
@@ -86,7 +85,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Best Sellers Section */}
         <div className="bg-gray-100 py-24 relative overflow-hidden">
           <div className="absolute inset-0 bg-purple-50/30"></div>
           <div className="container mx-auto px-4 relative z-10">
@@ -148,7 +146,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Testimonials Section */}
         <div className="container mx-auto px-4 py-24">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-pink-100 px-4 py-2 rounded-full mb-4">

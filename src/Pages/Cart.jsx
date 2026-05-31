@@ -93,7 +93,7 @@ export default function Cart() {
         <Navbar />
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
-            <div className="text-6xl mb-4">😞</div>
+            <div className="text-6xl mb-4"></div>
             <div className="text-xl text-red-500 mb-4">{error}</div>
             <button 
               onClick={loadCart}
@@ -144,8 +144,12 @@ export default function Cart() {
             <div className="flex-1">
               <div className="bg-white rounded-lg shadow overflow-hidden">
                 <div className="hidden md:grid grid-cols-12 gap-4 bg-gray-100 px-6 py-3 text-sm font-semibold text-gray-600">
+               
+               
                   <div className="col-span-6">Product</div>
-                  <div className="col-span-2 text-center">Price</div>
+                  <div 
+                  
+                  className="col-span-2 text-center">Price</div>
                   <div className="col-span-2 text-center">Quantity</div>
                   <div className="col-span-2 text-right">Total</div>
                 </div>
@@ -197,6 +201,8 @@ export default function Cart() {
                               ${subtotalItem.toFixed(2)}
                             </div>
                           </div>
+
+                          
                         </div>
                       </div>
                     );
@@ -251,7 +257,6 @@ export default function Cart() {
                   )}
                 </button>
                 
-                {/* Payment methods note */}
                 <p className="text-xs text-gray-500 text-center mt-4">
                   Secure checkout • Free returns
                 </p>
