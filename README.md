@@ -1,4 +1,4 @@
-# ✨ SparkleCart - Complete E-Commerce Platform
+#  SparkleCart - Complete E-Commerce Platform
 
 ![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?logo=.net)
 ![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react)
@@ -7,22 +7,22 @@
 ![JWT](https://img.shields.io/badge/JWT-Authentication-000000?logo=jsonwebtokens)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-## 📖 Overview
+##  Overview
 
 SparkleCart is a modern full-stack e-commerce platform built with **.NET 10**, **React 18**, **Tailwind CSS**, and **SQL Server**. It provides a complete online shopping experience with secure authentication, product management, shopping cart functionality, order processing, and inventory management.
 
 ---
 
-## 🚀 Features
+##  Features
 
-### 🔐 Authentication & Security
+###  Authentication & Security
 
 * JWT-based authentication
 * User registration and login
 * Secure password hashing using BCrypt
 * Protected API endpoints
 
-### 🛍️ Shopping Experience
+###  Shopping Experience
 
 * Browse product catalog
 * Search and filter products
@@ -31,21 +31,21 @@ SparkleCart is a modern full-stack e-commerce platform built with **.NET 10**, *
 * Remove items from cart
 * Checkout and order placement
 
-### 📦 Inventory Management
+###  Inventory Management
 
 * Full CRUD operations for products
 * Category management
 * Real-time stock updates
 * Automatic inventory tracking
 
-### 📱 Modern User Interface
+###  Modern User Interface
 
 * Responsive design for all devices
 * Built with Tailwind CSS
 * Clean and playful geometric design
 * Fast and intuitive navigation
 
-### 📋 Order Management
+###  Order Management
 
 * Place orders securely
 * View order history
@@ -53,7 +53,7 @@ SparkleCart is a modern full-stack e-commerce platform built with **.NET 10**, *
 
 ---
 
-# 🏗️ Tech Stack
+#  Tech Stack
 
 ## Backend
 
@@ -74,7 +74,7 @@ SparkleCart is a modern full-stack e-commerce platform built with **.NET 10**, *
 
 ---
 
-# 📂 Project Structure
+#  Project Structure
 
 ## Backend
 
@@ -123,7 +123,7 @@ sparkle/
 
 ---
 
-# ⚙️ Installation
+#  Installation
 
 ## Prerequisites
 
@@ -272,7 +272,7 @@ http://localhost:5173
 
 ---
 
-# 🔐 Environment Variables
+#  Environment Variables
 
 ## Backend (`appsettings.json`)
 
@@ -298,7 +298,7 @@ VITE_API_URL=https://your-backend-url/api
 
 ---
 
-# 🗄️ Database Schema
+#  Database Schema
 
 ### Tables
 
@@ -312,7 +312,7 @@ VITE_API_URL=https://your-backend-url/api
 
 ---
 
-# 🔄 Authentication Flow
+#  Authentication Flow
 
 1. User registers using name, email, and password.
 2. Password is securely hashed with BCrypt.
@@ -324,7 +324,7 @@ VITE_API_URL=https://your-backend-url/api
 
 ---
 
-# ⚠️ Error Handling
+#  Error Handling
 
 The application uses a global exception middleware that:
 
@@ -335,7 +335,7 @@ The application uses a global exception middleware that:
 
 ---
 
-# 🚢 Deployment
+# Deployment
 
 ## Backend Deployment
 
@@ -368,7 +368,7 @@ Deploy the generated `dist` folder to:
 
 ---
 
-# 🤝 Contributing
+#  Contributing
 
 Contributions are welcome!
 
@@ -403,7 +403,7 @@ See the `LICENSE` file for additional information.
 
 ---
 
-# 👨‍💻 Author
+#  Author
 
 **Ibrahim Zatary**
 
@@ -423,7 +423,7 @@ https://github.com/IbrahimZatary/Sparklecart-backend
 
 ---
 
-# 🙏 Acknowledgments
+#  Acknowledgments
 
 Special thanks to:
 
