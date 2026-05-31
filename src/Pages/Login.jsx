@@ -31,7 +31,6 @@ export default function Login() {
   };
 
   return (
-   
     <div className="min-h-screen flex items-center justify-center bg-white p-4">
       <div className="flex flex-col md:flex-row w-full max-w-6xl bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-gray-700">
         
@@ -84,30 +83,6 @@ export default function Login() {
             </button>
           </form>
 
-          <div className="flex items-center my-4">
-            <hr className="flex-grow border-gray-600" />
-            <span className="mx-4 text-gray-400 text-xs font-medium">or sign in with</span>
-            <hr className="flex-grow border-gray-600" />
-          </div>
-
-          <div className="flex justify-center gap-4">
-            <button className="p-1.5 bg-gray-700 hover:bg-gray-600 rounded-full transition-colors cursor-pointer">
-              <svg className="w-5 h-5 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
-              </svg>
-            </button>
-            <button className="p-1.5 bg-gray-700 hover:bg-gray-600 rounded-full transition-colors cursor-pointer">
-              <svg className="w-5 h-5 text-[#DB4437]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/>
-              </svg>
-            </button>
-            <button className="p-1.5 bg-gray-700 hover:bg-gray-600 rounded-full transition-colors cursor-pointer">
-              <svg className="w-5 h-5 text-[#0A66C2]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451c.979 0 1.771-.773 1.771-1.729V1.729C24 .774 23.204 0 22.225 0z"/>
-              </svg>
-            </button>
-          </div>
-
           <div className="mt-6 text-center text-gray-400 text-sm">
             No account yet?{' '}
             <Link to="/signup" className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors cursor-pointer">
@@ -117,8 +92,6 @@ export default function Login() {
         </div>
 
         <div className="w-full md:w-[70%] relative bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center p-8 md:p-12">
-          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 10% 20%, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
-          
           <div className="relative z-10 flex flex-col items-center justify-center text-center text-white">
             <img 
               src={charImage} 
@@ -137,5 +110,4 @@ export default function Login() {
       </div>
     </div>
   );
-
 }

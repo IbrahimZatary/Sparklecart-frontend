@@ -1,20 +1,16 @@
-/* eslint-disable no-unused-vars */
 import axios from "axios";
 
-//axios instace
-const URL = import.meta.env.VITE_API_URL || "https://localhost:7161/api" // for fallback 
- let apiClient =   axios.create({
+const URL = import.meta.env.VITE_API_URL || "https://localhost:7161/api";
 
-baseURL : URL ,
-headers : 
-{
-    "Content-Type" : 'application/json'
-},
-timeout: 1000,
-
+const apiClient = axios.create({
+  baseURL: URL,
+  headers: {
+    "Content-Type": "application/json"
+  },
+  timeout: 10000,
 });
 
-
+// Request interceptor - Add token
 apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -23,24 +19,21 @@ apiClient.interceptors.request.use(
     }
     return config;
   },
-    (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// middleware for requests/responses
-
+// Response interceptor - Handle errors
 apiClient.interceptors.response.use(
-(response) => {
-    return response.data;
-  },
+  (response) => response.data,
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
+      localStorage.removeItem('userId');
       window.location.href = '/login';
-      //more handling 
     }
-});
+    return Promise.reject(error);
+  }
+);
 
 export default apiClient;
