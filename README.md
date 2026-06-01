@@ -132,7 +132,7 @@ Ensure the following tools are installed:
 
 * .NET 10 SDK
 * Node.js 18+
-* SQL Server (LocalDB or Express)
+* SQL Server (LocalDB )
 * Git
 
 ---
@@ -396,13 +396,6 @@ git push origin feature/amazing-feature
 
 ---
 
-# 📜 License
-
-This project is licensed under the **MIT License**.
-
-See the `LICENSE` file for additional information.
-
----
 
 #  Author
 
@@ -420,20 +413,9 @@ https://github.com/IbrahimZatary/Sparklecart-frontend
 
 ### Backend Repository
 
-https://github.com/IbrahimZatary/Sparklecart-backend
+https://github.com/IbrahimZatary/SparkleCart
 
 ---
 
-#  Acknowledgments
 
-Special thanks to:
 
-* .NET Community
-* React Team
-* Tailwind CSS Team
-* Open Source Contributors
-* Everyone who supported this project
-
----
-
-⭐ If you find this project helpful, consider giving it a star on GitHub.
