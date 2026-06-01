@@ -187,7 +187,7 @@ export default function Inventory() {
             <div className="text-xl text-red-500 mb-4">{error}</div>
             <button 
               onClick={() => window.location.reload()}
-              className="bg-indigo-600 text-white px-6 py-2 rounded-lg"
+              className="bg-black text-white px-6 py-2 rounded-lg"
             >
               Try Again
             </button>
@@ -210,7 +210,7 @@ export default function Inventory() {
             </div>
             <button
               onClick={openCreateModal}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors"
+              className= "text-black bg-white hover:bg-black hover:text-white  px-6 py-2 rounded-lg flex items-center gap-2 transition-colors"
             >
               <span className="text-xl">+</span> Add New Product
             </button>
@@ -218,15 +218,15 @@ export default function Inventory() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="bg-white rounded-lg shadow p-6">
-              <div className="text-3xl font-bold text-indigo-600">{products.length}</div>
+              <div className="text-3xl font-bold text-gray-900">{products.length}</div>
               <div className="text-gray-500">Total Products</div>
             </div>
             <div className="bg-white rounded-lg shadow p-6">
-              <div className="text-3xl font-bold text-green-600">{categories.length}</div>
+              <div className="text-3xl font-bold text-gray-900">{categories.length}</div>
               <div className="text-gray-500">Categories</div>
             </div>
             <div className="bg-white rounded-lg shadow p-6">
-              <div className="text-3xl font-bold text-orange-600">
+              <div className="text-3xl font-bold text-gray-900">
                 {products.reduce((sum, p) => sum + (p.quantity || 0), 0)}
               </div>
               <div className="text-gray-500">Total Stock</div>
@@ -259,23 +259,23 @@ export default function Inventory() {
                   ) : (
                     products.map((product) => (
                       <tr key={product.id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 text-sm text-gray-500">{product.id}</td>
+                        <td className="px-6 py-4 text-sm font-mono text-gray-900 font-medium">{product.id}</td>
                         <td className="px-6 py-4">
                           <div className="font-medium text-gray-900">{product.name}</div>
                           {product.description && (
                             <div className="text-sm text-gray-500 truncate max-w-xs">{product.description}</div>
                           )}
                         </td>
-                        <td className="px-6 py-4 text-sm font-semibold text-indigo-600">
+                        <td className="px-6 py-4 text-sm font-semibold text-gray-900">
                           ${(product.price || 0).toFixed(2)}
                         </td>
                         <td className="px-6 py-4">
-                          <span className={`text-sm font-medium px-2 py-1 rounded ${
+                          <span className={`text-sm font-bold px-2 py-1 rounded ${
                             (product.quantity || 0) > 10 
-                              ? 'bg-green-100 text-green-700' 
+                              ? ' text-gray-900' 
                               : (product.quantity || 0) > 0
-                              ? 'bg-yellow-100 text-yellow-700'
-                              : 'bg-red-100 text-red-700'
+                              ? ' text-gray-900'
+                              : ' text-gray-900'
                           }`}>
                             {product.quantity || 0}
                           </span>
@@ -409,7 +409,7 @@ export default function Inventory() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50"
+                  className="px-4 py-2 bg-black text-white rounded-md hover:bg-white disabled:opacity-50"
                 >
                   {submitting ? 'Saving...' : (editingProduct ? 'Update Product' : 'Create Product')}
                 </button>
