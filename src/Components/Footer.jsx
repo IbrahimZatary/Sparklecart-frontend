@@ -27,6 +27,8 @@ const Footer = () => {
             <ul className="space-y-2 text-sm">
               <li className="hover:text-white cursor-pointer transition-colors">New Arrivals</li>
               <li className="hover:text-white cursor-pointer transition-colors">Best Sellers</li>
+
+
               <li className="hover:text-white cursor-pointer transition-colors">Hot item</li>
               <li className="hover:text-white cursor-pointer transition-colors">
                 <a href="/categories">Categories</a>
@@ -40,6 +42,7 @@ const Footer = () => {
             <ul className="space-y-2 text-sm">
               <li className="hover:text-white cursor-pointer transition-colors">FAQs</li>
               <li className="hover:text-white cursor-pointer transition-colors">Shipping & Returns</li>
+              
               <li className="hover:text-white cursor-pointer transition-colors">Track Order</li>
               <li className="hover:text-white cursor-pointer transition-colors">Contact Us</li>
             </ul>

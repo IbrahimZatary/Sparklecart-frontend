@@ -6,8 +6,10 @@ import Footer from '../Components/Footer';
 
 export default function Inventory() {
   const [products, setProducts] = useState([]);
+
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
@@ -42,6 +44,7 @@ export default function Inventory() {
           setProducts(productsRes);
           setCategories(categoriesRes);
           setError('');
+
           console.log('Products loaded:', productsRes);
           console.log('Categories loaded:', categoriesRes);
         }
@@ -79,11 +82,11 @@ export default function Inventory() {
   const openEditModal = (product) => {
     setEditingProduct(product);
     setFormData({
-      name: product.name || '',
-      price: product.price || '',
-      description: product.description || '',
-      quantity: product.quantity || '',
-      categoryId: product.categoryId || ''
+      name: product.name ,
+      price: product.price ,
+      description: product.description ,
+      quantity: product.quantity ,
+      categoryId: product.categoryId 
     });
     setShowModal(true);
   };
@@ -93,6 +96,10 @@ export default function Inventory() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
@@ -101,7 +108,7 @@ export default function Inventory() {
       const productData = {
         name: formData.name,
         price: parseFloat(formData.price),
-        description: formData.description || "",
+        description: formData.description ,
         quantity: parseInt(formData.quantity),
         categoryId: parseInt(formData.categoryId)
       };
@@ -149,15 +156,16 @@ export default function Inventory() {
       
       const updatedProducts = await apiClient.get('/product');
       setProducts(updatedProducts);
+
     } catch (err) {
-      alert(err.response?.data?.message || 'Failed to delete product. Please try again.');
+      alert(err.response?.data?.message || 'Failed to delete theproduct  .');
       console.error(err);
     }
   };
 
   const getCategoryName = (categoryId) => {
     const category = categories.find(c => c.categoryID === categoryId || c.id === categoryId);
-    return category?.name || 'Unknown';
+    return category?.name ;
   };
 
   if (loading) {
@@ -169,7 +177,7 @@ export default function Inventory() {
           
           <div className="flex flex-col items-center gap-4">
             <div className="w-12 h-12 border-4 border-gray-300 border-t-indigo-600 rounded-full animate-spin"></div>
-            <div className="text-xl text-gray-600">Loading inventory...</div>
+            <div className="text-xl text-gray-600">Loading inventory</div>
           </div>
         </div>
         <Footer />
@@ -183,7 +191,7 @@ export default function Inventory() {
         <Navbar />
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
-            <div className="text-6xl mb-4">😞</div>
+            <div className="text-6xl mb-4"></div>
             <div className="text-xl text-red-500 mb-4">{error}</div>
             <button 
               onClick={() => window.location.reload()}

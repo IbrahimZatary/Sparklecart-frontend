@@ -7,6 +7,7 @@ import Footer from '../Components/Footer';
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const [error, setError] = useState('');
   const [addingToCart, setAddingToCart] = useState(null);
   const navigate = useNavigate();
@@ -70,6 +71,7 @@ export default function Products() {
         <Navbar />
         <div className="min-h-screen flex items-center justify-center">
           <div className="flex flex-col items-center gap-4">
+
             <div className="w-12 h-12 border-4 border-gray-300 border-t-indigo-600 rounded-full animate-spin"></div>
             <div className="text-xl text-gray-600">Loading products...</div>
           </div>
@@ -85,7 +87,8 @@ export default function Products() {
         <Navbar />
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
-            <div className="text-6xl mb-4">😞</div>
+          
+            <div className="text-6xl mb-4"></div>
             <div className="text-xl text-red-500 mb-4">{error}</div>
             <button 
               onClick={() => window.location.reload()}
@@ -109,7 +112,7 @@ export default function Products() {
           
           {products.length === 0 ? (
             <div className="text-center py-12">
-              <div className="text-6xl mb-4">📦</div>
+              <div className="text-6xl mb-4"></div>
               <p className="text-gray-500">No products available.</p>
             </div>
           ) : (

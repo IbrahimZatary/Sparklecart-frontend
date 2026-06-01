@@ -10,7 +10,8 @@ export default function Home() {
     <>
       <Navbar />
       <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-white">
-        {/* Hero Section */}
+
+      
         <div className="relative overflow-hidden">
           <div className="absolute top-20 left-10 w-32 h-32 bg-yellow-300/30 rounded-full blur-3xl -z-10"></div>
           <div className="absolute bottom-20 right-10 w-48 h-48 bg-pink-300/20 rounded-full blur-3xl -z-10"></div>
@@ -40,6 +41,7 @@ export default function Home() {
         </div>
 
         <div className="container mx-auto px-4 py-24 relative">
+
           <div className="absolute -top-10 left-10 w-24 h-24 bg-pink-300/20 rounded-full blur-2xl"></div>
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-purple-100 px-4 py-2 rounded-full mb-4">
@@ -53,6 +55,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+
             <div className="group bg-white rounded-2xl p-8 text-center border-2 border-slate-200 shadow-[6px_6px_0px_0px_#E2E8F0] hover:shadow-[10px_10px_0px_0px_#CBD5E1] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-200">
               <div className="w-20 h-20 bg-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-[3px_3px_0px_0px_#1E293B]">
                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -150,6 +153,7 @@ export default function Home() {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-pink-100 px-4 py-2 rounded-full mb-4">
               <span className="w-2 h-2 bg-pink-500 rounded-full"></span>
+
               <span className="text-pink-600 font-semibold text-sm uppercase tracking-wide">Testimonials</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Our Happy Clients</h2>

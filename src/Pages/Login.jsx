@@ -22,8 +22,9 @@ export default function Login() {
         localStorage.setItem('token', response.accessToken);
         localStorage.setItem('user', JSON.stringify({ email: response.email }));
         localStorage.setItem('userId', response.userId);
+        
         console.log('Login successful!');
-        navigate('/');  // ← Redirect to Home page
+        navigate('/');  
       } else {
         setError('Login failed: No token received');
       }

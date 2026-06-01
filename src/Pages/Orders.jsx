@@ -28,9 +28,10 @@ export default function Orders() {
       console.log('Orders loaded:', data);
       setOrders(data);
       setError('');
+
     } catch (err) {
       console.error('Orders load error:', err);
-      setError('Failed to load orders. Please try again.');
+      setError('Failed to load orders');
     } finally {
       setLoading(false);
     }
@@ -44,22 +45,22 @@ export default function Orders() {
     }
   };
 
-  const getStatusColor = (status) => {
-    switch (status?.toLowerCase()) {
-      case 'pending':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'processing':
-        return 'bg-blue-100 text-blue-800';
-      case 'shipped':
-        return 'bg-purple-100 text-purple-800';
-      case 'delivered':
-        return 'bg-green-100 text-green-800';
-      case 'cancelled':
-        return 'bg-red-100 text-red-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
+//   const getStatusColor = (status) => {
+//     switch (status?.toLowerCase()) {
+//       case 'pending':
+//         return 'bg-yellow-100 text-yellow-800';
+//       case 'processing':
+//         return 'bg-blue-100 text-blue-800';
+//       case 'shipped':
+//         return 'bg-purple-100 text-purple-800';
+//       case 'delivered':
+//         return 'bg-green-100 text-green-800';
+//       case 'cancelled':
+//         return 'bg-red-100 text-red-800';
+//       default:
+//         return 'bg-gray-100 text-gray-800';
+//     }
+//   };
 
   if (loading) {
     return (
@@ -82,7 +83,7 @@ export default function Orders() {
         <Navbar />
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
-            <div className="text-6xl mb-4">😞</div>
+            <div className="text-6xl mb-4"></div>
             <div className="text-xl text-red-500 mb-4">{error}</div>
             <button 
               onClick={loadOrders}
@@ -105,9 +106,11 @@ export default function Orders() {
         <Navbar />
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center py-12 bg-white rounded-lg shadow max-w-md mx-auto">
-            <div className="text-6xl mb-4">📦</div>
+            <div className="text-6xl mb-4"></div>
             <h2 className="text-2xl font-semibold text-gray-600 mb-2">No orders yet</h2>
-            <p className="text-gray-500 mb-6">You haven't placed any orders yet.</p>
+            <p className="text-gray-500 mb-6">You haven't placed any orders yet</p>
+
+
             <button 
               onClick={() => navigate('/products')}
               className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg transition-colors"
@@ -135,7 +138,7 @@ export default function Orders() {
                 <div className="p-6 border-b bg-gray-50">
                   <div className="flex flex-wrap justify-between items-center gap-4">
                     <div>
-                      <span className="text-sm text-gray-500">Order #</span>
+                      <span className="text-sm text-gray-500">Order </span>
                       <span className="font-mono font-semibold text-gray-800 ml-2">
                         {order.id}
                       </span>
@@ -148,7 +151,7 @@ export default function Orders() {
                     </div>
                     <div>
                       <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}>
-                        {order.status || 'Pending'}
+                        {order.status }
                       </span>
                     </div>
                     <div>
@@ -161,7 +164,7 @@ export default function Orders() {
                       onClick={() => toggleOrderDetails(order.id)}
                       className="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
                     >
-                      {expandedOrder === order.id ? 'Hide Details ▲' : 'View Details ▼'}
+                      {expandedOrder === order.id ? 'Hide Details ' : 'View Details '}
                     </button>
                   </div>
                 </div>
@@ -183,7 +186,7 @@ export default function Orders() {
                                 ${(item.subtotal || (item.unitPrice * item.quantity)).toFixed(2)}
                               </p>
                               <p className="text-sm text-gray-500">
-                                ${(item.unitPrice || 0).toFixed(2)} each
+                                ${(item.unitPrice ).toFixed(2)} each
                               </p>
                             </div>
                           </div>
@@ -198,6 +201,7 @@ export default function Orders() {
                     
                     <div className="mt-4 pt-4 border-t">
                       <div className="flex justify-end">
+
                         <div className="w-64 space-y-2">
                           <div className="flex justify-between text-gray-600">
                             <span>Subtotal:</span>
@@ -218,10 +222,10 @@ export default function Orders() {
                     <div className="mt-4 pt-4 border-t">
                       <h4 className="font-semibold text-gray-700 mb-2">Shipping Information</h4>
                       <p className="text-gray-600">
-                        {order.shippingAddress || 'Default Shipping Address'}
+                        {order.shippingAddress }
                       </p>
                       <p className="text-gray-600 mt-1">
-                        Payment Method: {order.paymentMethod || 'Credit Card'}
+                        Payment Method: {order.paymentMethod }
                       </p>
                     </div>
                   </div>
