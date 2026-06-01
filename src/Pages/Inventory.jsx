@@ -134,6 +134,7 @@ export default function Inventory() {
         const errorMessages = [];
         const errors = err.response.data.errors;
         for (const [field, messages] of Object.entries(errors)) {
+          
           errorMessages.push(`${field}: ${messages.join(', ')}`);
         }
         alert(`Validation failed:\n${errorMessages.join('\n')}`);

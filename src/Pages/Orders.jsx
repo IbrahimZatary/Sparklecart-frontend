@@ -87,7 +87,7 @@ export default function Orders() {
             <div className="text-xl text-red-500 mb-4">{error}</div>
             <button 
               onClick={loadOrders}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg transition-colors"
+              className="bg-black hover:bg-white text-black px-6 py-2 rounded-lg transition-colors"
             >
               Try Again
             </button>
