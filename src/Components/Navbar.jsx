@@ -13,37 +13,47 @@ export default function Navbar() {
   return (
     <nav className="bg-white shadow-md">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        {/* Logo */}
+
+
+
+
         <h1 
           onClick={() => navigate('/')} 
-          className="text-xl font-bold cursor-pointer hover:text-indigo-600 transition-colors"
+          className="text-xl font-bold cursor-pointer hover:text-gray-700 transition-colors"
         >
           SparkleCart
         </h1>
         
-        {/* Navigation Links */}
+
+        
         <div className="flex gap-6 items-center">
+        <button 
+          onClick={() => navigate('/categories')} 
+          className="cursor-pointer hover:text-gray-700 transition-colors"
+        >
+          Categories
+        </button>
           <button 
             onClick={() => navigate('/products')} 
-            className="cursor-pointer hover:text-indigo-600 transition-colors"
+            className="cursor-pointer hover:text-gray-700 transition-colors"
           >
             Products
           </button>
           <button 
             onClick={() => navigate('/inventory')} 
-            className="cursor-pointer hover:text-indigo-600 transition-colors"
+            className="cursor-pointer hover:text-gray-700 transition-colors"
             >
             Inventory
             </button>
           <button 
             onClick={() => navigate('/cart')} 
-            className="cursor-pointer hover:text-indigo-600 transition-colors"
+            className="cursor-pointer hover:text-gray-700 transition-colors"
           >
             Cart
           </button>
           <button 
             onClick={() => navigate('/orders')} 
-            className="cursor-pointer hover:text-indigo-600 transition-colors"
+            className="cursor-pointer hover:text-gray-700 transition-colors"
             >
             Orders
             </button>

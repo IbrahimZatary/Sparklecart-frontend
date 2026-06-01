@@ -7,6 +7,9 @@ import Products from './Pages/Products';
 import Cart from './Pages/Cart'; 
 import Inventory from './Pages/Inventory';
 
+import Categories from './Pages/Categories';
+
+
 import Orders from './Pages/Orders';
 
 
@@ -36,7 +39,11 @@ function App() {
         <Route 
           path="/orders" 
           element={token ? <Orders /> : <Navigate to="/signin" />} 
-        />
+        /> 
+        <Route 
+        path="/categories" 
+        element={token ? <Categories /> : <Navigate to="/signin" />} 
+      />
       </Routes>
     </BrowserRouter>
   );
