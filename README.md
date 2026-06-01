@@ -114,6 +114,7 @@ sparkle/
 │   │   ├── Cart.jsx
 │   │   ├── Orders.jsx
 │   │   └── Inventory.jsx
+│   │   └── Categories.jsx
 │   ├── services/
 │   │   └── apiClient.js
 │   ├── assets/
