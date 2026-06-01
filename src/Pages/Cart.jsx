@@ -123,7 +123,7 @@ export default function Cart() {
           </p>
           <button
             onClick={() => navigate("/products")}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg transition-colors"
+            className="bg-black text-white hover:bg-white  hover:text-black px-6 py-2 rounded-lg transition-colors"
           >
             Continue Shopping
           </button>
