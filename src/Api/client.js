@@ -10,7 +10,6 @@ const apiClient = axios.create({
   timeout: 10000,
 });
 
-// Request interceptor - Add token
 apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -22,7 +21,6 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor - Handle errors
 apiClient.interceptors.response.use(
   (response) => response.data,
   (error) => {
