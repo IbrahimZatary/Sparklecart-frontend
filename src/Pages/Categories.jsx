@@ -119,11 +119,10 @@ export default function Categories() {
 
 
 
-
+                
                 <p className="text-gray-500 text-sm">Browse products →</p>
               </div>
             ))}
-            
           </div>
         </div>
       </div>
