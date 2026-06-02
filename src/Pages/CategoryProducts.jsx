@@ -1,93 +1,101 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '../Api/client';
-
 import Navbar from '../Components/Navbar';
-
 import Footer from '../Components/Footer';
 
-export default function Products() {
+export default function CategoryProducts() {
+  const { categoryId } = useParams();
   const [products, setProducts] = useState([]);
 
+  const [categoryName, setCategoryName] = useState('');
   const [loading, setLoading] = useState(true);
 
   const [error, setError] = useState('');
-  const [addingToCart, setAddingToCart] = useState(null);
-  
-  const [currentPage, setCurrentPage] = useState(1);
 
+  const [addingToCart, setAddingToCart] = useState(null);
+  // for pagination states 
+  const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const [totalProducts, setTotalProducts] = useState(0);
   const [pageSize] = useState(10);
   
   const navigate = useNavigate();
 
-  useEffect(() => {
-    let isMounted = true;
+  const token = localStorage.getItem('token');
 
-    const loadProducts = async () => {
-      setLoading(true);
-      try {
-        const response = await apiClient.get(`/product?pageNumber=${currentPage}&pageSize=${pageSize}`);
-        
-        if (isMounted) {
-          setProducts(response.items );
-          setTotalPages(response.totalPages );
 
-          setTotalProducts(response.totalCount );
-          setError('');
-        }
-      } catch (err) {
-        if (isMounted) {
-          setError('Failed to load products');
-        }
-        console.error(err);
+  const loadCategoryProducts = async () => {
 
-      } finally {
+    setLoading(true);
 
-        if (isMounted) {
+    try {
+      const response = await apiClient.get(`/product?pageNumber=${currentPage}&pageSize=${pageSize}`);
+      
+      const categoryProducts = (response.items).filter(
+        product => product.categoryId === parseInt(categoryId) || product.categoryID === parseInt(categoryId)
+      );
+      
+      setProducts(categoryProducts);
+      setTotalProducts(response.totalCount);
+      setTotalPages(response.totalPages);
+      
+      if (categoryProducts.length > 0 && categoryProducts[0].categoryName) {
+        setCategoryName(categoryProducts[0].categoryName);
+      } else {
 
-          setLoading(false);
-        }
+        const categories = await apiClient.get('/category');
+
+        const category = categories.find(c => c.categoryID === parseInt(categoryId) || c.id === parseInt(categoryId));
+
+        setCategoryName(category?.name );
       }
-    };
+      
+      setError('');
+    } catch (err) {
+      setError('Failed to load produc');
+      console.error(err);
 
-    loadProducts();
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  useEffect(() => {
+    if (!token) {
 
-    return () => {
-      isMounted = false;
+      navigate('/signin');
 
-    };
-  }, [currentPage, pageSize]);
+      return;
+    }
+    loadCategoryProducts();
+  }, [token, currentPage, categoryId]);
+
 
   const addToCart = async (productId) => {
 
     const userId = localStorage.getItem('userId');
     
     if (!userId) {
-      alert('Please login first');
-
+      alert(' login first');
 
       navigate('/signin');
-
       return;
     }
 
     setAddingToCart(productId);
     try {
       await apiClient.post(`/cart/add?userID=${userId}`, { 
-        productId: productId, 
+        productId: productId,
 
         quantity: 1 
       });
       alert('Added to cart!');
 
     } catch (err) {
-
-      alert(err.response?.data?.message);
+      alert(err.response?.data?.message )
+      ;
       console.error(err);
-
     } finally {
       setAddingToCart(null);
     }
@@ -95,9 +103,7 @@ export default function Products() {
 
   const goToNextPage = () => {
     if (currentPage < totalPages) {
-
       setCurrentPage(currentPage + 1);
-
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -120,9 +126,8 @@ export default function Products() {
         <Navbar />
         <div className="min-h-screen flex items-center justify-center">
           <div className="flex flex-col items-center gap-4">
-
             <div className="w-12 h-12 border-4 border-gray-300 border-t-gray-900 rounded-full animate-spin"></div>
-            <div className="text-xl text-gray-600">Loading products</div>
+            <div className="text-xl text-gray-600">Loading products...</div>
           </div>
         </div>
         <Footer />
@@ -134,18 +139,14 @@ export default function Products() {
     return (
       <>
         <Navbar />
-
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
 
-            <div className="text-6xl mb-4"></div>
-
-
-            <div className="text-xl text-red-500 mb-4">{error}</div>
+            <div className="text-xl text-red
+            -500 mb-4">{error}</div>
             <button 
-              onClick={() => window.location.reload()}
-
-              className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-2 rounded-lg transition-colors"
+              onClick={loadCategoryProducts}
+              className="bg-gray-900 text-white px-6 py-2 rounded-lg"
             >
               Try Again
             </button>
@@ -162,44 +163,50 @@ export default function Products() {
       <div className="bg-gray-50 min-h-screen py-8">
         <div className="container mx-auto px-4">
 
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Our Products</h1>
-          <p className="text-gray-500 mb-8">
+          <button
+            onClick={() => navigate('/categories')}
 
-          </p>
+            className="text-gray-600 hover:text-gray-900 mb-4 flex items-center gap-2"
+          >
+            ← Back to Categories
+          </button>
           
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">{categoryName}</h1>
+          <p className="text-gray-500 mb-8">
+          </p>
+
           {products.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4"></div>
-              // if there is no products
-              <p className="text-gray-500">No products available.</p>
+            <div className="text-center py-12 bg-white rounded-lg">
+              <div className="text-6xl mb-4">📦</div>
+              <p className="text-gray-500">No products found in this category.</p>
             </div>
           ) : (
             <>
               <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {products.map((product) => (
-
                   <div key={product.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                     <div 
-
                       className="h-48 bg-gradient-to-br from-gray-100 to-gray-200 cursor-pointer flex items-center justify-center"
                       onClick={() => navigate(`/product/${product.id}`)}
-
                     >
-                      <span className="text-4xl"></span>
+                      <span className="text-4xl">🛍️</span>
                     </div>
                     
                     <div className="p-4">
-
                       <h3 
-                        className="text-lg font-bold text-gray-800 mb-1 cursor-pointer hover:text-gray-600"
 
+
+
+
+                        className="text-lg font-bold text-gray-800 mb-1 cursor-pointer hover:text-gray-600"
                         onClick={() => navigate(`/product/${product.id}`)}
                       >
+
                         {product.name}
                       </h3>
                       
                       <p className="text-gray-500 text-sm mb-2">
-                        Stock: {product.quantity }
+                        Stock: {product.quantity || 0}
                       </p>
                       
                       <div className="flex justify-between items-center mt-3">
@@ -209,7 +216,9 @@ export default function Products() {
                         
                         <button 
                           onClick={() => addToCart(product.id)}
+
                           disabled={addingToCart === product.id}
+
                           className="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-lg transition-colors cursor-pointer text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           {addingToCart === product.id ? 'Adding...' : 'Add to Cart'}
@@ -221,13 +230,14 @@ export default function Products() {
               </div>
 
               {totalPages > 1 && (
+
                 <div className="flex justify-center items-center gap-2 mt-10">
                   <button
-
                     onClick={goToPreviousPage}
-
                     disabled={currentPage === 1}
+
                     className={`px-4 py-2 rounded-lg border transition-colors ${
+
                       currentPage === 1
 
                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200'
@@ -236,8 +246,9 @@ export default function Products() {
                   >
                     ← Previous
                   </button>
-                      {/* // handle the numbers in pagination  */}
+
                   <div className="flex gap-1">
+                  // dynamic list of page numbers for a pagination control 
                     {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                       let pageNum;
                       if (totalPages <= 5) {
@@ -253,7 +264,6 @@ export default function Products() {
                       return (
                         <button
                           key={pageNum}
-
                           onClick={() => goToPage(pageNum)}
 
                           className={`w-10 h-10 rounded-lg transition-colors ${
@@ -262,7 +272,6 @@ export default function Products() {
                               ? 'bg-gray-900 text-white'
                               : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
                           }`}
-
                         >
                           {pageNum}
                         </button>
@@ -272,11 +281,8 @@ export default function Products() {
 
                   <button
                     onClick={goToNextPage}
-
                     disabled={currentPage === totalPages}
-
                     className={`px-4 py-2 rounded-lg border transition-colors ${
-
                       currentPage === totalPages
                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200'
                         : 'bg-white text-gray-700 hover:bg-gray-900 hover:text-white border-gray-300'
@@ -288,9 +294,7 @@ export default function Products() {
               )}
 
               <div className="text-center text-gray-500 text-sm mt-4">
-
                 Page {currentPage} of {totalPages}
-
               </div>
             </>
           )}

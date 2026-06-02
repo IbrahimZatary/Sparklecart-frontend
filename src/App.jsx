@@ -7,7 +7,8 @@ import Products from './Pages/Products';
 import Cart from './Pages/Cart'; 
 import Inventory from './Pages/Inventory';
 
-import Categories from './Pages/Categories';
+import Categories from './Pages/Categories'; 
+import CategoryProducts from './Pages/CategoryProducts';
 
 
 import Orders from './Pages/Orders';
@@ -44,6 +45,10 @@ function App() {
         path="/categories" 
         element={token ? <Categories /> : <Navigate to="/signin" />} 
       />
+      <Route 
+      path="/category/:categoryId" 
+      element={token ? <CategoryProducts /> : <Navigate to="/signin" />} 
+    />
       </Routes>
     </BrowserRouter>
   );

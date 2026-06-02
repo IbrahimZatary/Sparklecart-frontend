@@ -11,7 +11,7 @@ export default function Home() {
       <Navbar />
       <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-white">
 
-      
+
         <div className="relative overflow-hidden">
           <div className="absolute top-20 left-10 w-32 h-32 bg-yellow-300/30 rounded-full blur-3xl -z-10"></div>
           <div className="absolute bottom-20 right-10 w-48 h-48 bg-pink-300/20 rounded-full blur-3xl -z-10"></div>
@@ -93,8 +93,7 @@ export default function Home() {
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center mb-12">
               <div className="inline-flex items-center gap-2 bg-yellow-100 px-4 py-2 rounded-full mb-4">
-                <span className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></span>
-                <span className="text-yellow-700 font-semibold text-sm uppercase tracking-wide">🔥 Best Sellers</span>
+                <span className="text-yellow-700 font-semibold text-sm uppercase tracking-wide">Best Sellers</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Our Most Popular Products</h2>
               <p className="text-slate-600 text-lg">Join thousands of happy customers</p>
@@ -152,13 +151,12 @@ export default function Home() {
         <div className="container mx-auto px-4 py-24">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-pink-100 px-4 py-2 rounded-full mb-4">
-              <span className="w-2 h-2 bg-pink-500 rounded-full"></span>
 
               <span className="text-pink-600 font-semibold text-sm uppercase tracking-wide">Testimonials</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Our Happy Clients</h2>
             <p className="text-slate-600 text-lg">What our customers say about us</p>
-          </div>
+          </div> 
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white rounded-2xl p-6 border-2 border-slate-200 shadow-[6px_6px_0px_0px_#E2E8F0] hover:shadow-[8px_8px_0px_0px_#CBD5E1] transition-all duration-200">
