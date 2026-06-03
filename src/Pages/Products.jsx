@@ -6,6 +6,7 @@ import Navbar from '../Components/Layout/Navbar';
 import Footer from '../Components/Layout/Footer';
 
 import Pagination from '../components/Pagination';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -81,19 +82,9 @@ export default function Products() {
 
   if (loading) {
     return (
-      <>
-        <Navbar />
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="flex flex-col items-center gap-4">
-
-            <div className="w-12 h-12 border-4 border-gray-300 border-t-gray-900 rounded-full animate-spin"></div>
-            <div className="text-xl text-gray-600">Loading </div>
-          </div>
-        </div>
-        <Footer />
-      </>
-    );
-  }
+    <LoadingSpinner/>
+    )
+  };
 
   if (error) {
     return (
@@ -139,7 +130,6 @@ export default function Products() {
                       className="h-48 bg-gradient-to-br from-gray-100 to-gray-200 cursor-pointer flex items-center justify-center"
                       onClick={() => navigate(`/product/${product.id}`)}
                     >
-                      <span className="text-4xl">🛍️</span>
                     </div>
                     
                     <div className="p-4">
@@ -151,7 +141,7 @@ export default function Products() {
                       </h3>
                       
                       <p className="text-gray-500 text-sm mb-2">
-                        Stock: {product.quantity || 0}
+                        Stock: {product.quantity}
                       </p>
                       
                       <div className="flex justify-between items-center mt-3">

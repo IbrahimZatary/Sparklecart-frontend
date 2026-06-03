@@ -14,7 +14,7 @@ export default function Categories() {
   const [products, setProducts] = useState([]);
   const [productsLoading, setProductsLoading] = useState(false);
   const [addingToCart, setAddingToCart] = useState(null); 
-  
+
    // for pagination 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -118,8 +118,10 @@ export default function Categories() {
     }
   };
 
+
+
   if (loading) {
-    return <LoadingSpinner message="Loading categories..." />;
+    return <LoadingSpinner message="Loading categories" />;
   }
 
   if (error) {
@@ -181,7 +183,6 @@ export default function Categories() {
                         className="h-48 bg-gradient-to-br from-gray-100 to-gray-200 cursor-pointer flex items-center justify-center"
                         onClick={() => navigate(`/product/${product.id}`)}
                       >
-                        <span className="text-4xl">🛍️</span>
                       </div>
                       <div className="p-4">
                         <h3 
@@ -202,7 +203,7 @@ export default function Categories() {
                             disabled={addingToCart === product.id}
                             className="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-lg text-sm disabled:opacity-50"
                           >
-                            {addingToCart === product.id ? 'Adding...' : 'Add to Cart'}
+                            {addingToCart === product.id ? 'Adding' : 'Add to Cart'}
                           </button>
                         </div>
                       </div>

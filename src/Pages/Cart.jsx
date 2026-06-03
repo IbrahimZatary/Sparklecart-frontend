@@ -4,7 +4,8 @@ import apiClient from "../Api/client";
 
 import Navbar from "../Components/Layout/Navbar";
 
-import Footer from "../Components/Layout/Footer";
+import Footer from "../Components/Layout/Footer"; 
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Cart() {
   const [cart, setCart] = useState(null);
@@ -94,22 +95,13 @@ export default function Cart() {
     }
   };
 
-  if (loading) {
+  if (loading) 
     return (
       <>
-        <Navbar />
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="flex flex-col items-center gap-4">
-
-            <div className="w-12 h-12 border-4 border-gray-300 border-t-indigo-600 rounded-full animate-spin"></div>
-
-            <div className="text-xl text-gray-600">Loading your cart..</div>
-          </div>
-        </div>
-        <Footer />
+        <LoadingSpinner/>
       </>
-    );
-  }
+    )
+  
 
   if (error) {
     return (
@@ -343,4 +335,4 @@ export default function Cart() {
       <Footer />
     </>
   );
-}
+};

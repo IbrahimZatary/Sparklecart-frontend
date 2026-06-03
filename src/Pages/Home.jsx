@@ -4,7 +4,6 @@ import HeroSection from "../Components/Home/HeroSection";
 
 import AboutUS from "../Components/Home/AboutUs"
 
-
 import BestSellerCard from "../Components/Home/BestSellerCard";
 
 import TestimonialCard from "../Components/Home/TestimonialCard";
@@ -19,10 +18,8 @@ export default function Home() {
       <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-white">
         <HeroSection />
 
-        {/* About Us Section */}
         <AboutUS/>
 
-        {/* Best Sellers Section */}
         <div className="bg-gray-100 py-24 relative overflow-hidden">
           <div className="absolute inset-0 bg-purple-50/30"></div>
           <div className="container mx-auto px-4 relative z-10">
@@ -42,7 +39,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Testimonials Section */}
         <div className="container mx-auto px-4 py-24">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-pink-100 px-4 py-2 rounded-full mb-4">
