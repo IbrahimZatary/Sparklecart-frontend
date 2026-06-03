@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../Api/client';
-import Navbar from '../Components/Navbar';
+import Navbar from '../Components/Layout/Navbar';
 
-import Footer from '../Components/Footer';
+import Footer from '../Components/Layout/Footer';
 
 import Pagination from '../components/Pagination';
 
@@ -12,6 +12,7 @@ export default function Products() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [addingToCart, setAddingToCart] = useState(null);
+  
   // for pagination 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);

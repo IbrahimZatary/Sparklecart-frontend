@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import apiClient from '../Api/client';
-import charImage from '../assets/char.png';
+import apiClient from '../../Api/client';
+import charImage from "../../assets/char.png";
 
 export default function Login() {
   const [email, setEmail] = useState('');

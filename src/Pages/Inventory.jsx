@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../Api/client';
-import Navbar from '../Components/Navbar';
-import Footer from '../Components/Footer';
+import Navbar from '../Components/Layout/Navbar';
+import Footer from '../Components/Layout/Footer';
+import Pagination from '../components/Pagination';
 
 export default function Inventory() {
   const [products, setProducts] = useState([]);
@@ -10,9 +11,7 @@ export default function Inventory() {
   const [loading, setLoading] = useState(true);
 
   const [error, setError] = useState('');
-
   const [showModal, setShowModal] = useState(false);
-
   const [editingProduct, setEditingProduct] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -22,14 +21,12 @@ export default function Inventory() {
     categoryId: ''
   });
   const [submitting, setSubmitting] = useState(false);
-  
+  // pagination states
+
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
-  const [totalProducts, setTotalProducts] = useState(0)
-  ;
+  const [totalProducts, setTotalProducts] = useState(0);
   const [pageSize] = useState(10);
-  
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
@@ -49,17 +46,12 @@ export default function Inventory() {
           apiClient.get('/category')
         ]);
         if (isMounted) {
-          setProducts(productsRes.items || []);
-
+          setProducts(productsRes.items );
           setTotalPages(productsRes.totalPages);
 
-          setTotalProducts(productsRes.totalCount );
-
+          setTotalProducts(productsRes.totalCount);
           setCategories(categoriesRes);
           setError('');
-
-          console.log('Products loaded:', productsRes.items);
-          console.log('Categories loaded:', categoriesRes);
         }
       } catch (err) {
         if (isMounted) {
@@ -68,10 +60,8 @@ export default function Inventory() {
         console.error(err);
       } finally {
         if (isMounted) {
-
           setLoading(false);
         }
-
       }
     };
 
@@ -84,95 +74,72 @@ export default function Inventory() {
 
   const openCreateModal = () => {
     setEditingProduct(null);
-
     setFormData({
       name: '',
       price: '',
       description: '',
       quantity: '',
       categoryId: ''
-
-
     });
     setShowModal(true);
   };
-// pop up on edit 
+
   const openEditModal = (product) => {
     setEditingProduct(product);
     setFormData({
       name: product.name,
-
-
       price: product.price,
       description: product.description,
-
       quantity: product.quantity,
-      categoryId: product.categoryId
-    });
+      categoryId: product.categoryId});
     setShowModal(true);
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setSubmitting(true);
 
     try {
       const productData = {
         name: formData.name,
         price: parseFloat(formData.price),
-
         description: formData.description,
-
         quantity: parseInt(formData.quantity),
-
         categoryId: parseInt(formData.categoryId)
       };
 
-      console.log('Sending product data:', productData);
-
       if (editingProduct) {
         await apiClient.put(`/product/${editingProduct.id}`, productData);
-        alert('Product updated !');
-      } 
-      else {
-
-
+        alert('Product updated!');
+      } else {
         await apiClient.post('/product', productData);
-        alert('Product created !');
+        alert('Product created!');
       }
 
       setShowModal(false);
       
       const updatedProducts = await apiClient.get(`/product?pageNumber=${currentPage}&pageSize=${pageSize}`);
       setProducts(updatedProducts.items);
-
       setTotalPages(updatedProducts.totalPages);
 
-      setTotalProducts(updatedProducts.totalCount );
+      setTotalProducts(updatedProducts.totalCount);
+
     } catch (err) {
       console.error('Error response:', err.response?.data);
       
       if (err.response?.data?.errors) {
-
         const errorMessages = [];
         const errors = err.response.data.errors;
-
         for (const [field, messages] of Object.entries(errors)) {
-
           errorMessages.push(`${field}: ${messages.join(', ')}`);
-
         }
         alert(`Validation failed:\n${errorMessages.join('\n')}`);
-      } else 
-        {
-
+      } else {
         alert(err.response?.data?.message);
       }
     } finally {
@@ -182,24 +149,21 @@ export default function Inventory() {
 
   const handleDelete = async (product) => {
 
-    if (!window.confirm(`Are you sure you want to
-       delete "${product.name}"?
-       This action cannot be undone.`)) {
+    if (!window.confirm(`Are you sure you want to delete "${product.name}"?`)) {
       return;
     }
 
     try {
-
       await apiClient.delete(`/product/${product.id}`);
-      alert('Product deleted successfully!');
 
+      alert('Product deleted successfully!');
       
       const updatedProducts = await apiClient.get(`/product?pageNumber=${currentPage}&pageSize=${pageSize}`);
-      setProducts(updatedProducts.items );
+      setProducts(updatedProducts.items);
 
       setTotalPages(updatedProducts.totalPages);
 
-      setTotalProducts(updatedProducts.totalCount );
+      setTotalProducts(updatedProducts.totalCount);
     } catch (err) {
       alert(err.response?.data?.message);
       console.error(err);
@@ -207,21 +171,8 @@ export default function Inventory() {
   };
 
   const getCategoryName = (categoryId) => {
-    const category = categories
-    .find(c => c.categoryID === categoryId || c.id === categoryId);
+    const category = categories.find(c => c.categoryID === categoryId || c.id === categoryId);
     return category?.name;
-  };
-
-  const goToNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const goToPreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
   };
 
   if (loading) {
@@ -231,9 +182,7 @@ export default function Inventory() {
         <div className="min-h-screen flex items-center justify-center">
           <div className="flex flex-col items-center gap-4">
 
-            <div className="w-12 h-12 border-4 border-gray-300 border-t-gray-900 rounded-full animate-spin">
-
-            </div>
+            <div className="w-12 h-12 border-4 border-gray-300 border-t-gray-900 rounded-full animate-spin"></div>
             <div className="text-xl text-gray-600">Loading inventory</div>
           </div>
         </div>
@@ -248,9 +197,7 @@ export default function Inventory() {
         <Navbar />
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
-
             <div className="text-xl text-red-500 mb-4">{error}</div>
-
             <button 
               onClick={() => window.location.reload()}
               className="bg-gray-900 text-white px-6 py-2 rounded-lg"
@@ -283,18 +230,23 @@ export default function Inventory() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="bg-white rounded-lg shadow p-6">
+
               <div className="text-3xl font-bold text-gray-900">{totalProducts}</div>
+
               <div className="text-gray-500">Total Products</div>
             </div>
             <div className="bg-white rounded-lg shadow p-6">
+
               <div className="text-3xl font-bold text-gray-900">{categories.length}</div>
+
               <div className="text-gray-500">Categories</div>
             </div>
             <div className="bg-white rounded-lg shadow p-6">
               <div className="text-3xl font-bold text-gray-900">
-                {products.reduce((sum, p) => sum + (p.quantity || 0), 0)}
+
+                {products.reduce((sum, p) => sum + (p.quantity), 0)}
               </div>
-              <div className="text-gray-500">Total Stock (Current Page)</div>
+              <div className="text-gray-500">Total Stock</div>
             </div>
           </div>
 
@@ -303,38 +255,35 @@ export default function Inventory() {
               <table className="w-full">
                 <thead className="bg-gray-100">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
 
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Name</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product Name</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
 
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
-
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stock</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
                   </tr>
                 </thead>
-                {/* // if no prodcuts found  */}
                 <tbody className="divide-y divide-gray-200">
                   {products.length === 0 ? (
                     <tr>
                       <td colSpan="6" className="px-6 py-12 text-center text-gray-500">
-                        there isNo products found click into "Add New Product" to create one.
-                       </td>
-                     </tr>
+                        No products found. Click "Add New Product" .
+                      </td>
+                    </tr>
                   ) : (
                     products.map((product) => (
                       <tr key={product.id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 text-sm font-mono text-gray-900 font-medium">{product.id}</td>
-                        <td className="px-6 py-4"> 
-
+                        <td className="px-6 py-4">
                           <div className="font-medium text-gray-900">{product.name}</div>
                           {product.description && (
                             <div className="text-sm text-gray-500 truncate max-w-xs">{product.description}</div>
                           )}
                         </td>
                         <td className="px-6 py-4 text-sm font-semibold text-gray-900">
-                          ${(product.price || 0).toFixed(2)}
+                          ${(product.price ).toFixed(2)}
                         </td>
                         <td className="px-6 py-4">
                           <span className="text-sm font-bold text-gray-900">
@@ -346,7 +295,6 @@ export default function Inventory() {
                         </td>
                         <td className="px-6 py-4 text-right space-x-2">
                           <button
-
                             onClick={() => openEditModal(product)}
                             className="text-gray-600 hover:text-gray-900 font-medium"
                           >
@@ -367,35 +315,11 @@ export default function Inventory() {
             </div>
           </div>
 
-          {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-2 mt-6">
-              <button
-                onClick={goToPreviousPage}
-                disabled={currentPage === 1}
-                className={`px-4 py-2 rounded-lg border transition-colors ${
-                  currentPage === 1
-                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200'
-                    : 'bg-white text-gray-700 hover:bg-gray-900 hover:text-white border-gray-300'
-                }`}
-              >
-                ← Previous
-              </button>
-              <span className="text-gray-600">
-                Page {currentPage} of {totalPages}
-              </span>
-              <button
-                onClick={goToNextPage}
-                disabled={currentPage === totalPages}
-                className={`px-4 py-2 rounded-lg border transition-colors ${
-                  currentPage === totalPages
-                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200'
-                    : 'bg-white text-gray-700 hover:bg-gray-900 hover:text-white border-gray-300'
-                }`}
-              >
-                Next →
-              </button>
-            </div>
-          )}
+          <Pagination 
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
         </div>
       </div>
 
@@ -438,7 +362,7 @@ export default function Inventory() {
                   required
                   step="0.01"
                   min="0"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-gray-500 focus:border-gray-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
                   placeholder="0.00"
                 />
               </div>
@@ -452,34 +376,26 @@ export default function Inventory() {
                   onChange={handleInputChange}
                   required
                   min="0"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-gray-500 focus:border-gray-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
                   placeholder="0"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Category </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
                 <select
                   name="categoryId"
-
                   value={formData.categoryId}
-
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-gray-500 focus:border-gray-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
                 >
                   <option value="">Select a category</option>
                   {categories.map((category) => (
-
                     <option key={category.categoryID || category.id} value={category.categoryID || category.id}>
-
                       {category.name}
-
                     </option>
-                  ))} 
-
-                  
-
+                  ))}
                 </select>
               </div>
 
@@ -487,13 +403,10 @@ export default function Inventory() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
                 <textarea
                   name="description"
-
                   value={formData.description}
-
                   onChange={handleInputChange}
-
                   rows="3"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-gray-500 focus:border-gray-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
                   placeholder="Product description (optional)"
                 />
               </div>
@@ -501,7 +414,6 @@ export default function Inventory() {
               <div className="flex justify-end gap-3 pt-4">
                 <button
                   type="button"
-
                   onClick={() => setShowModal(false)}
                   className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
                 >
@@ -510,10 +422,9 @@ export default function Inventory() {
                 <button
                   type="submit"
                   disabled={submitting}
-
                   className="px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 disabled:opacity-50"
                 >
-                  {submitting ? 'Saving...' : (editingProduct ? 'Update Product' : 'Create Product')}
+                  {submitting ? 'Saving' : (editingProduct ? 'Update Product' : 'Create Product')}
                 </button>
               </div>
             </form>

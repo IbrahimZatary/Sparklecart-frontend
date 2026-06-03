@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import apiClient from '../Api/client';
+import apiClient from '../../Api/client';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({

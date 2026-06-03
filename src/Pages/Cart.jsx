@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../Api/client";
 
-import Navbar from "../Components/Navbar";
+import Navbar from "../Components/Layout/Navbar";
 
-import Footer from "../Components/Footer";
+import Footer from "../Components/Layout/Footer";
 
 export default function Cart() {
   const [cart, setCart] = useState(null);
