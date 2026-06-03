@@ -250,7 +250,7 @@ export default function Inventory() {
           <div className="text-center">
 
             <div className="text-xl text-red-500 mb-4">{error}</div>
-            
+
             <button 
               onClick={() => window.location.reload()}
               className="bg-gray-900 text-white px-6 py-2 rounded-lg"
@@ -314,7 +314,7 @@ export default function Inventory() {
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                // if no prodcuts found 
+                {/* // if no prodcuts found  */}
                 <tbody className="divide-y divide-gray-200">
                   {products.length === 0 ? (
                     <tr>
@@ -476,7 +476,10 @@ export default function Inventory() {
                       {category.name}
 
                     </option>
-                  ))}
+                  ))} 
+
+                  
+
                 </select>
               </div>
 
