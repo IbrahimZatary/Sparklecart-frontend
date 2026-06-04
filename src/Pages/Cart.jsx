@@ -224,7 +224,7 @@ if (!cart?.items || cart.items.length === 0) {
                 <button
                   onClick={handleCheckout}
                   disabled={checkoutLoading}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg mt-6 transition-colors disabled:opacity-50"
+                  className="w-full bg-black hover:bg-white-700 text-white py-3 rounded-lg mt-6 transition-colors disabled:opacity-50"
                 >
                   {checkoutLoading ? (
                     <span className="flex items-center justify-center gap-2">
