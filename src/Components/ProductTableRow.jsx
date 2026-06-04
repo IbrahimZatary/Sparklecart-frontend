@@ -21,7 +21,7 @@ export default function ProductTableRow({ product , onEdit, onDelete, getCategor
         </span>
       </td>
       <td className="px-6 py-4 text-sm text-gray-500">
-        {product.categoryName || getCategoryName(product.categoryId)} // for check
+        { getCategoryName(product.categoryId)} // for check
       </td>
       <td className="px-6 py-4 text-right space-x-2">
         <button

@@ -1,12 +1,12 @@
 export default function Pagination({ currentPage, totalPages, onPageChange }) {
-  if (totalPages <= 1) {
+  if (totalPages <= 1) { // one page as items below 10 or below
     return null;
   }
 
   const goToPreviousPage = () => {
     if (currentPage > 1) {
       onPageChange(currentPage - 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' }); // up
     }
   };
 
