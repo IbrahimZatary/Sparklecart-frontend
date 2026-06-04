@@ -4,6 +4,9 @@ import apiClient from '../Api/client';
 import Navbar from '../Components/Layout/Navbar';
 import Footer from '../Components/Layout/Footer';
 import Pagination from '../components/Pagination';
+import LoadingSpinner from '../components/LoadingSpinner';
+import ErrorDisplay from '../Components/ErrorDisplay';
+import ProductFormModal from '../Components/ProductFormModal';
 
 export default function Inventory() {
   const [products, setProducts] = useState([]);
@@ -156,7 +159,7 @@ export default function Inventory() {
     try {
       await apiClient.delete(`/product/${product.id}`);
 
-      alert('Product deleted successfully!');
+      alert('Product deleted ');
       
       const updatedProducts = await apiClient.get(`/product?pageNumber=${currentPage}&pageSize=${pageSize}`);
       setProducts(updatedProducts.items);
@@ -166,7 +169,6 @@ export default function Inventory() {
       setTotalProducts(updatedProducts.totalCount);
     } catch (err) {
       alert(err.response?.data?.message);
-      console.error(err);
     }
   };
 
@@ -179,37 +181,14 @@ export default function Inventory() {
     return (
       <>
         <Navbar />
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="flex flex-col items-center gap-4">
-
-            <div className="w-12 h-12 border-4 border-gray-300 border-t-gray-900 rounded-full animate-spin"></div>
-            <div className="text-xl text-gray-600">Loading inventory</div>
-          </div>
-        </div>
-        <Footer />
+        <LoadingSpinner message='Loading the inventory'/>       <Footer />
       </>
-    );
-  }
+    )
+  };
 
-  if (error) {
-    return (
-      <>
-        <Navbar />
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="text-center">
-            <div className="text-xl text-red-500 mb-4">{error}</div>
-            <button 
-              onClick={() => window.location.reload()}
-              className="bg-gray-900 text-white px-6 py-2 rounded-lg"
-            >
-              Try Again
-            </button>
-          </div>
-        </div>
-        <Footer />
-      </>
-    );
-  }
+  if (error) 
+    return   <ErrorDisplay error={error} onRetry={() => window.location.reload()} />;
+;
 
   return (
     <>
@@ -265,6 +244,9 @@ export default function Inventory() {
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
                   </tr>
                 </thead>
+                
+                
+                
                 <tbody className="divide-y divide-gray-200">
                   {products.length === 0 ? (
                     <tr>
@@ -311,6 +293,8 @@ export default function Inventory() {
                     ))
                   )}
                 </tbody>
+
+                
               </table>
             </div>
           </div>
@@ -323,115 +307,24 @@ export default function Inventory() {
         </div>
       </div>
 
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-screen overflow-y-auto">
-            <div className="flex justify-between items-center p-6 border-b">
-              <h2 className="text-xl font-bold text-gray-800">
-                {editingProduct ? 'Edit Product' : 'Create New Product'}
-              </h2>
-              <button
-                onClick={() => setShowModal(false)}
-                className="text-gray-400 hover:text-gray-600 text-2xl"
-              >
-                ×
-              </button>
-            </div>
+      
+                  <ProductFormModal 
+                      isOpen={showModal}
 
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Product Name *</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-gray-500 focus:border-gray-500"
-                  placeholder="Enter product name"
-                />
-              </div>
+                      onClose={() => setShowModal(false)}
+                      onSubmit={handleSubmit}
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Price *</label>
-                <input
-                  type="number"
-                  name="price"
-                  value={formData.price}
-                  onChange={handleInputChange}
-                  required
-                  step="0.01"
-                  min="0"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                  placeholder="0.00"
-                />
-              </div>
+                      editingProduct={editingProduct}
+                      formData={formData}
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Stock Quantity *</label>
-                <input
-                  type="number"
-                  name="quantity"
-                  value={formData.quantity}
-                  onChange={handleInputChange}
-                  required
-                  min="0"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                  placeholder="0"
-                />
-              </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                <select
-                  name="categoryId"
-                  value={formData.categoryId}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                >
-                  <option value="">Select a category</option>
-                  {categories.map((category) => (
-                    <option key={category.categoryID || category.id} value={category.categoryID || category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                      onInputChange={handleInputChange}
+                      categories={categories}
+                      submitting={submitting}
+                    />
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                <textarea
-                  name="description"
-                  value={formData.description}
-                  onChange={handleInputChange}
-                  rows="3"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                  placeholder="Product description (optional)"
-                />
-              </div>
 
-              <div className="flex justify-end gap-3 pt-4">
-                <button
-                  type="button"
-                  onClick={() => setShowModal(false)}
-                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 disabled:opacity-50"
-                >
-                  {submitting ? 'Saving' : (editingProduct ? 'Update Product' : 'Create Product')}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
       <Footer />
     </>
   );
-}
+};

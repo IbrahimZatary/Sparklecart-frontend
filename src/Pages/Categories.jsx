@@ -5,6 +5,7 @@ import Navbar from '../Components/Layout/Navbar';
 import Footer from '../Components/Layout/Footer';
 import Pagination from '../components/Pagination';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ErrorDisplay from '../Components/ErrorDisplay';
 
 export default function Categories() {
   const [categories, setCategories] = useState([]);
@@ -128,17 +129,8 @@ export default function Categories() {
     return (
       <>
         <Navbar />
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="text-center">
-            <div className="text-xl text-red-500 mb-4">{error}</div>
-            <button 
-              onClick={loadCategories}
-              className="bg-gray-900 text-white px-6 py-2 rounded-lg"
-            >
-              Try Again
-            </button>
-          </div>
-        </div>
+            <ErrorDisplay error={error} onRetry={loadCategories} />;
+
         <Footer />
       </>
     );
@@ -192,11 +184,11 @@ export default function Categories() {
                           {product.name}
                         </h3>
                         <p className="text-gray-500 text-sm mb-2">
-                          Stock: {product.quantity || 0}
+                          Stock: {product.quantity }
                         </p>
                         <div className="flex justify-between items-center mt-3">
                           <span className="text-2xl font-bold text-gray-900">
-                            ${(product.price || 0).toFixed(2)}
+                            ${(product.price ).toFixed(2)}
                           </span>
                           <button 
                             onClick={() => addToCart(product.id)}

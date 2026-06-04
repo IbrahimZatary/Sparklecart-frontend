@@ -5,6 +5,7 @@ import Navbar from '../Components/Layout/Navbar';
 import Footer from '../Components/Layout/Footer';
 import OrderCard from '../components/OrderCard';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ErrorDisplay from '../Components/ErrorDisplay';
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
@@ -22,7 +23,8 @@ export default function Orders() {
       setOrders(Array.isArray(data) ? data : []);
       setError('');
     } catch (err) {
-      console.error('Orders load error:', err);
+      
+      console.error('load error:', err);
       setError('Failed to load orders');
     } finally {
       setLoading(false);
@@ -35,7 +37,7 @@ export default function Orders() {
       return;
     }
     loadOrders();
-  }, []);
+  }, [navigate,token]);
 
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
@@ -61,36 +63,16 @@ export default function Orders() {
     );
   };
 
-  if (error) {
-    return (
-      <>
-        <Navbar />
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="text-center">
-            <div className="text-6xl mb-4"></div>
-            <div className="text-xl text-red-500 mb-4">{error}</div>
-            <button 
-
-              onClick={loadOrders}
-              className="bg-gray-900 text-white px-6 py-2 rounded-lg"
-            >
-              Try Again
-            </button>
-          </div>
-        </div>
-        <Footer />
-      </>
-    );
-  }
+  if (error) 
+    return <ErrorDisplay error={error} onRetry={loadOrders} />;
+  
 
   const currentUserId = parseInt(localStorage.getItem('userId'));
   const userOrders = orders.filter(order => order && order.userId === currentUserId);
 
-  console.log('Current userId:', currentUserId);
-  console.log('User orders:', userOrders);
 
   if (userOrders.length === 0) {
-    return (
+    return (// go for product to shop
       <>
         <Navbar />
         <div className="min-h-screen flex items-center justify-center">

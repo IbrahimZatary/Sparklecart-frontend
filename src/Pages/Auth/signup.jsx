@@ -18,7 +18,6 @@ export default function SignUp() {
     setLoading(true);
 
     try {
-      // Note: '/auth/sign-up' not '/auth/register'
       await apiClient.post('/auth/sign-up', {
         name: formData.name,
         email: formData.email,
@@ -27,7 +26,7 @@ export default function SignUp() {
       
       navigate('/signin');
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed. Please try again.');
+      setError(err.response?.data?.message);
     } finally {
       setLoading(false);
     }
@@ -46,9 +45,8 @@ export default function SignUp() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-3">
-            {/* Full Name */}
             <div>
-              <label className="block text-gray-300 font-medium mb-1 text-xs">Full Name</label>
+              <label className="block text-gray-300 font-medium mb-1 text-xs">Name</label>
               <input 
                 type="text" 
                 value={formData.name}
@@ -60,7 +58,7 @@ export default function SignUp() {
             </div>
 
             <div>
-              <label className="block text-gray-300 font-medium mb-1 text-xs">Email Address</label>
+              <label className="block text-gray-300 font-medium mb-1 text-xs">Email</label>
               <input 
                 type="email" 
                 value={formData.email}
@@ -94,7 +92,7 @@ export default function SignUp() {
               disabled={loading}
               className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-1.5 rounded-md transition duration-200 cursor-pointer text-sm mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Creating account...' : 'Sign Up'}
+              {loading ? 'Creating account' : 'Sign Up'}
             </button>
           </form>
 

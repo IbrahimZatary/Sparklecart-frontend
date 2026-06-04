@@ -23,13 +23,14 @@ export default function Login() {
         localStorage.setItem('user', JSON.stringify({ email: response.email }));
         localStorage.setItem('userId', response.userId);
         
-        console.log('Login successful!');
         navigate('/');  
       } else {
         setError('Login failed: No token received');
       }
-    } catch (err) {
-      setError(err.response?.data?.message || 'Login failed. Please try again.');
+
+    } catch (err)
+     {
+      setError(err.response?.data?.message);
     } finally {
       setLoading(false);
     }

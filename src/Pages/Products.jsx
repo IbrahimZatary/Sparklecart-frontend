@@ -7,6 +7,8 @@ import Footer from '../Components/Layout/Footer';
 
 import Pagination from '../components/Pagination';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ErrorDisplay from '../Components/ErrorDisplay';
+import ProductCard from '../Components/ProductCard';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -69,10 +71,11 @@ export default function Products() {
     try {
       await apiClient.post(`/cart/add?userID=${userId}`, { 
         productId: productId, 
-        quantity: 1 // As base
+        quantity: 1 // As default
       });
       alert('Added to cart');
     } catch (err) {
+
       alert(err.response?.data?.message);
       console.error(err);
     } finally {
@@ -90,22 +93,11 @@ export default function Products() {
     return (
       <>
         <Navbar />
-        {/* // if api fail  */}
-        <div className="min-h-screen flex items-center justify-center">
-
-          <div className="text-center">
-            <div className="text-xl text-red-500 mb-4">{error}</div>
-            <button 
-              onClick={() => window.location.reload()}
-              className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-2 rounded-lg transition-colors">
-              Try Again
-            </button>
-          </div>
-        </div>
+        <ErrorDisplay message='Failed to load products'/>
         <Footer />
       </>
-    );
-  }
+    )
+  };
 
   return (
     <>
@@ -123,46 +115,18 @@ export default function Products() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {products.map((product) => (
-                  <div key={product.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <div 
-                      className="h-48 bg-gradient-to-br from-gray-100 to-gray-200 cursor-pointer flex items-center justify-center"
-                      onClick={() => navigate(`/product/${product.id}`)}
-                    >
-                    </div>
-                    
-                    <div className="p-4">
-                      <h3 
-                        className="text-lg font-bold text-gray-800 mb-1 cursor-pointer hover:text-gray-600"
-                        onClick={() => navigate(`/product/${product.id}`)}
-                      >
-                        {product.name}
-                      </h3>
-                      
-                      <p className="text-gray-500 text-sm mb-2">
-                        Stock: {product.quantity}
-                      </p>
-                      
-                      <div className="flex justify-between items-center mt-3">
-                        <span className="text-2xl font-bold text-gray-900">
-                          ${(product.price || 0).toFixed(2)}
-                        </span>
-                        
-                        <button 
-                          onClick={() => addToCart(product.id)}
-                          disabled={addingToCart === product.id}
-                          className="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-lg transition-colors cursor-pointer text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          {addingToCart === product.id ? 'Adding' : 'Add to Cart'}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              
 
-
+<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+  {products.map((product) => (
+    <ProductCard 
+      key={product.id}
+      product={product}
+      onAddToCart={addToCart}
+      isAdding={addingToCart}
+    />
+  ))}
+</div>
 
 
               <Pagination 
@@ -179,4 +143,4 @@ export default function Products() {
       <Footer />
     </>
   );
-}
+};

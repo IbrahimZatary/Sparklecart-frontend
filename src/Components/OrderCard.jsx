@@ -3,91 +3,77 @@ import { useState } from 'react';
 export default function OrderCard({ order, getStatusColor }) {
   const [expanded, setExpanded] = useState(false);
 
-  
   return (
-    <div className="bg-white rounded-lg shadow overflow-hidden">
-      <div className="p-6 border-b bg-gray-50">
+    <div className="border border-gray-200 rounded-lg overflow-hidden">
+      <div className="p-4 bg-white">
         <div className="flex flex-wrap justify-between items-center gap-4">
           <div>
-            <span className="text-sm text-gray-500">Order #</span>
-            <span className="font-mono font-semibold text-gray-800 ml-2">{order.id}</span>
+            <span className="text-xs text-gray-500">Order #</span>
+            <span className="font-mono text-sm text-gray-900 ml-1">{order.id}</span>
           </div>
           <div>
-            <span className="text-sm text-gray-500">Date:</span>
-            <span className="text-gray-700 ml-2">
+            <span className="text-xs text-gray-500">Date</span>
+            <span className="text-sm text-gray-700 ml-1">
               {new Date(order.orderDate).toLocaleDateString()}
             </span>
           </div>
           <div>
-            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}>
+            <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
               {order.status}
             </span>
           </div>
           <div>
-            <span className="text-sm text-gray-500">Total:</span>
-            <span className="text-xl font-bold text-indigo-600 ml-2">
+            <span className="text-sm font-bold text-gray-900">
               ${order.price.toFixed(2)}
             </span>
           </div>
           <button
             onClick={() => setExpanded(!expanded)}
-            className="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
+            className="text-sm text-gray-500 hover:text-gray-700"
           >
-            {expanded ? 'Hide Details ▲' : 'View Details ▼'}
+            {expanded ? '− Hide' : '+ View'}
           </button>
         </div>
       </div>
 
       {expanded && (
-        <div className="p-6 border-t">
-          <h3 className="font-semibold text-gray-800 mb-4">Order Items</h3>
+        <div className="p-4 border-t border-gray-100 bg-gray-50">
+          <h3 className="font-medium text-gray-800 text-sm mb-3">Items</h3>
 
           {order.items && order.items.length > 0 ? (
-            <div className="space-y-3">
+            <div className="space-y-2">
               {order.items.map((item, index) => (
-                <div key={index} className="flex justify-between items-center py-2 border-b last:border-0">
+                <div key={index} className="flex justify-between items-center py-1">
                   <div>
-                    <p className="font-medium text-gray-800">{item.productName}</p>
-                    <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
+                    <p className="text-sm text-gray-800">{item.productName}</p>
+                    <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-semibold text-gray-800">
+                    <p className="text-sm font-medium text-gray-800">
                       ${(item.subtotal || (item.unitPrice * item.quantity)).toFixed(2)}
                     </p>
-                    <p className="text-sm text-gray-500">${item.unitPrice.toFixed(2)} each</p>
+                    <p className="text-xs text-gray-500">${item.unitPrice.toFixed(2)} ea</p>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="text-center py-4 text-gray-500">
-              <p className="text-sm mt-1">Order total: ${order.price}</p>
-            </div>
+            <p className="text-sm text-gray-500">Order total: ${order.price}</p>
           )}
 
-          <div className="mt-4 pt-4 border-t">
+          <div className="mt-3 pt-3 border-t border-gray-200">
             <div className="flex justify-end">
-              <div className="w-64 space-y-2">
-                <div className="flex justify-between text-gray-600">
-                  <span>Subtotal:</span>
-                  <span>${order.price.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-gray-600">
-                  <span>Shipping:</span>
-                  <span>Free</span>
-                </div>
-                <div className="flex justify-between text-lg font-bold text-gray-800 pt-2 border-t">
-                  <span>Total:</span>
-                  <span>${order.price.toFixed(2)}</span>
-                </div>
+              <div className="text-right">
+                <p className="text-xs text-gray-500">Total</p>
+                <p className="text-base font-bold text-gray-900">${order.price.toFixed(2)}</p>
               </div>
             </div>
           </div>
 
-          <div className="mt-4 pt-4 border-t">
-            <h4 className="font-semibold text-gray-700 mb-2">Shipping Information</h4>
-            <p className="text-gray-600">{order.shippingAddress || 'Default Address'}</p>
-            <p className="text-gray-600 mt-1">Payment Method: {order.paymentMethod || 'Credit Card'}</p>
+          <div className="mt-3 pt-3 border-t border-gray-200">
+            <p className="text-xs text-gray-500">Shipping</p>
+            <p className="text-sm text-gray-700">{order.shippingAddress || 'Default Address'}</p>
+            <p className="text-xs text-gray-500 mt-1">Payment: {order.paymentMethod || 'Credit Card'}</p>
           </div>
         </div>
       )}
