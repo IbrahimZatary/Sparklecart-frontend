@@ -108,9 +108,11 @@ export default function Cart() {
   const subtotal =
     cart.items.reduce(
       (sum, item) =>
-        sum + (item.subtotal || item.quantity * (item.unitPrice || item.productPrice || 0)),
+        sum + (item.subtotal || item.quantity * (item.unitPrice || item.productPrice)),
       0
     );
+
+// As real shopping expeirnce
   const shipping = 20;
   const tax = subtotal * 0.1;
 
@@ -126,7 +128,7 @@ export default function Cart() {
           <div className="flex flex-col lg:flex-row gap-8">
             <div className="flex-1">
               <div className="bg-white rounded-lg shadow overflow-hidden">
-                <div className="hidden md:grid grid-cols-12 gap-4 bg-gray-100 px-6 py-3 text-sm font-semibold text-gray-600">
+                <div className="hidden md:grid grid-cols-12 gap-4 bg-white px-6 py-3 text-sm font-semibold text-gray-600">
                   <div className="col-span-6">Product</div>
                   <div className="col-span-2 text-center">Price</div>
                   <div className="col-span-2 text-center">Quantity</div>

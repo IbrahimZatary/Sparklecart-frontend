@@ -29,7 +29,7 @@ export default function OrderCard({ order, getStatusColor }) {
           </div>
           <button
             onClick={() => setExpanded(!expanded)}
-            className="text-sm text-gray-500 hover:text-gray-700"
+            className="text-sm text-gray-500 hover:text-gray-700 hover:cursor-pointer"
           >
             {expanded ? '− Hide' : '+ View'}
           </button>

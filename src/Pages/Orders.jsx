@@ -40,7 +40,7 @@ export default function Orders() {
   }, [navigate,token]);
 
   const getStatusColor = (status) => {
-    switch (status?.toLowerCase()) {
+    switch (status) {
       case 'pending':
         return 'bg-yellow-100 text-yellow-800';
       case 'processing':

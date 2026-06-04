@@ -232,7 +232,7 @@ export default function Inventory() {
           <div className="bg-white rounded-lg shadow overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-100">
+                <thead className="bg-white">
                   <tr>
 
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
@@ -269,7 +269,7 @@ export default function Inventory() {
                         </td>
                         <td className="px-6 py-4">
                           <span className="text-sm font-bold text-gray-900">
-                            {product.quantity || 0}
+                            {product.quantity }
                           </span>
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-500">
